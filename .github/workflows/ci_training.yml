@@ -42,7 +42,6 @@ jobs:
 
       - name: Build Docker Model
         run: |
-          # Pakai path langsung ke artefak model, lebih aman
           mlflow models build-docker \
             --model-uri "./mlruns/0/$RUN_ID/artifacts/model" \
             --name "cc"
