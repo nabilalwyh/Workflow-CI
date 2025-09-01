@@ -4,10 +4,4 @@ conda_env: conda.yml
 
 entry_points:
   main:
-    parameters:
-      n_estimators: {type: int, default: 300}
-      min_samples_split: {type: int, default: 6}
-      min_samples_leaf: {type: int, default: 1}
-      max_depth: {type: int, default: 20}
-      dataset: {type: string, default: "dataset_preprocessing/X_train.csv"}
-    command: "python modelling.py {n_estimators} {min_samples_split} {min_samples_leaf} {max_depth} {dataset}"
+    command: "python modelling.py"
