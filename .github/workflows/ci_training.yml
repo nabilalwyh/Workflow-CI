@@ -33,7 +33,7 @@ jobs:
 
       - name: Run MLFlow Project
         run: |
-          mlflow run MLproject --env-manager=local 
+          mlflow run MLProject --env-manager=local 
 
       - name: Get latest MLFlow run_id
         run: |
