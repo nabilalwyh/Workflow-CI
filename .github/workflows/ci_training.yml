@@ -30,15 +30,19 @@ jobs:
         run: |
           mlflow run MLProject --env-manager=local
 
-      - name: Get latest run_id (Credit Scoring experiment)
+      - name: Get latest run_id
         run: |
-          EXP_ID=$(mlflow experiments list | grep "Credit Scoring" | awk '{print $1}')
-          RUN_ID=$(mlflow runs list -x start_time -e $EXP_ID --max-results 1 | tail -n 1 | awk '{print $1}')
+          EXP_ID=$(mlflow experiments search --view-all | grep "Credit Scoring" | awk '{print $1}')
+                  
+          RUN_ID=$(mlflow runs list --experiment-id $EXP_ID | awk 'NR==2 {print $1}')
+
           echo "EXP_ID=$EXP_ID" >> $GITHUB_ENV
           echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
           echo "Experiment ID: $EXP_ID"
           echo "Latest run_id: $RUN_ID"
-          mlflow artifacts list -r $RUN_ID
+
+          ls -R mlruns/$EXP_ID/$RUN_ID
+
 
       - name: Build Docker Model
         run: |
