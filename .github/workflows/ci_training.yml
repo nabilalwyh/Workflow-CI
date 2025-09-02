@@ -28,7 +28,7 @@ jobs:
 
       - name: Run MLFlow Project
         run: |
-          mlflow run . --env-manager=local
+          mlflow run MLProject --env-manager=local
 
       - name: Get latest run_id (Credit Scoring experiment)
         run: |
