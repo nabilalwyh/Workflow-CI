@@ -30,23 +30,25 @@ jobs:
         run: |
           mlflow run MLProject --env-manager=local
 
-      - name: Get latest run_id
+            - name: Get latest run_id and model_id
         run: |
-          # Cari ID experiment "Credit Scoring"
-          EXP_ID=$(mlflow experiments search --view-all | grep "Credit Scoring" | awk '{print $1}')
+          RUN_ID=$(ls -td mlruns/0/*/ | head -n 1 | cut -d'/' -f3)
+          MODEL_ID=$(ls -td mlruns/0/$RUN_ID/outputs/m-*/ | head -n 1 | cut -d'/' -f5)
 
-          # Ambil run_id terakhir dari experiment
-          RUN_ID=$(mlflow runs list --experiment-id $EXP_ID | awk 'NR==2 {print $1}')
-
-          echo "EXP_ID=$EXP_ID" >> $GITHUB_ENV
           echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
-          echo "Experiment ID: $EXP_ID"
-          echo "Latest run_id: $RUN_ID"
+          echo "MODEL_ID=$MODEL_ID" >> $GITHUB_ENV
 
-          # Debug isi folder mlruns biar yakin modelnya ada
-          ls -R mlruns/$EXP_ID/$RUN_ID
+          echo "Latest RUN_ID: $RUN_ID"
+          echo "Latest MODEL_ID: $MODEL_ID"
+          ls -R mlruns/0/$RUN_ID
 
       - name: Build Docker Model
+        run: |
+          echo "Using model from mlruns/0/models/$MODEL_ID"
+          mlflow models build-docker \
+            --model-uri "mlruns/0/models/$MODEL_ID" \
+            --name "cc"
+
         env:
           RUN_ID: ${{ env.RUN_ID }}
         run: |
