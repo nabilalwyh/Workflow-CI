@@ -1,18 +1,17 @@
-import mlflow
-import dagshub
+import os
 import json
-import tempfile
 import pandas as pd
+import numpy as np
+import mlflow
+import joblib
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import classification_report, accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
 import matplotlib.pyplot as plt
 import seaborn as sns
-
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import RandomizedSearchCV
-from sklearn.metrics import (
-    accuracy_score, precision_score, recall_score,
-    f1_score, classification_report, confusion_matrix
-)
 from mlflow.models.signature import infer_signature
+from mlflow.sklearn import log_model
+import warnings
 
 if __name__ == "__main__":
     warnings.filterwarnings("ignore")
