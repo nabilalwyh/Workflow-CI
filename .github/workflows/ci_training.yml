@@ -51,7 +51,7 @@ jobs:
       - name: Build Docker Model
         run: |
           mlflow models build-docker \
-            --model-uri "runs:/${{ env.RUN_ID }}/model" \
+            --model-uri "runs:/${{ env.RUN_ID }}/rf_best_model" \
             --name "${{ secrets.DOCKER_IMAGE_NAME }}"
 
       - name: Log in to Docker Hub
