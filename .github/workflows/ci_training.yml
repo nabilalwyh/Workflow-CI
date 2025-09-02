@@ -37,7 +37,7 @@ jobs:
       # 5. Get latest MLFlow run_id
       - name: Get latest MLFlow run_id
         run: |
-          RUN_ID=$(ls -td mlruns/291035330561170178/*/ | head -n 1 | cut -d'/' -f3)
+          RUN_ID=$(ls -td ../mlruns/291035330561170178/*/ | head -n 1 | cut -d'/' -f3)
           echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
           echo "Latest run_id: $RUN_ID"
           echo "Contents of run folder:"
@@ -47,7 +47,7 @@ jobs:
       - name: Build Docker Model
         run: |
           mlflow models build-docker \
-            --model-uri "./mlruns/291035330561170178/$RUN_ID/artifacts/model" \
+            --model-uri "../mlruns/291035330561170178/$RUN_ID/artifacts/model" \
             --name "cc"
 
       # 7. Login to Docker Hub
