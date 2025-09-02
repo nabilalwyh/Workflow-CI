@@ -12,6 +12,7 @@ import seaborn as sns
 from mlflow.models.signature import infer_signature
 from mlflow.sklearn import log_model
 import warnings
+import tempfile
 
 if __name__ == "__main__":
     warnings.filterwarnings("ignore")
