@@ -43,7 +43,7 @@ jobs:
         with:
           name: model-artifact
           path: |
-            mlruns/0/${{ env.RUN_ID }}/artifacts/model/
+            mlruns/0/${{ env.RUN_ID }}/artifacts/rf_best_model/
             MLProject/metric_info.json
             MLProject/estimator.html
             MLProject/training_confusion_matrix.png
