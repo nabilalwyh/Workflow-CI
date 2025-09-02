@@ -30,7 +30,7 @@ jobs:
         run: |
           mlflow run MLProject --env-manager=local
 
-            - name: Get latest run_id and model_id
+      - name: Get latest run_id and model_id
         run: |
           RUN_ID=$(ls -td mlruns/0/*/ | head -n 1 | cut -d'/' -f3)
           MODEL_ID=$(ls -td mlruns/0/$RUN_ID/outputs/m-*/ | head -n 1 | cut -d'/' -f5)
