@@ -28,20 +28,22 @@ jobs:
 
       - name: Run MLFlow Project
         run: |
-          # Jalankan training, hasilnya otomatis masuk ke mlruns lokal runner
           mlflow run MLProject --env-manager=local
 
       - name: Get latest run_id
         run: |
-          RUN_ID=$(ls -td mlruns/0/*/ | head -n 1 | cut -d'/' -f3)
+          EXP_ID=$(ls -d mlruns/*/ | grep -o '[0-9]\+' | head -n 1)
+          RUN_ID=$(ls -td mlruns/$EXP_ID/*/ | head -n 1 | cut -d'/' -f3)
+          echo "EXP_ID=$EXP_ID" >> $GITHUB_ENV
           echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
+          echo "Experiment ID: $EXP_ID"
           echo "Latest run_id: $RUN_ID"
-          ls -R mlruns/0/$RUN_ID
+          ls -R mlruns/$EXP_ID/$RUN_ID
 
       - name: Build Docker Model
         run: |
           mlflow models build-docker \
-            --model-uri "mlruns/0/$RUN_ID/artifacts/model" \
+            --model-uri "mlruns/$EXP_ID/$RUN_ID/artifacts/model" \
             --name "cc"
 
       - name: Log in to Docker Hub
