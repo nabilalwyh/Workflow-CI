@@ -24,8 +24,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install mlflow
-          pip install seaborn pandas matplotlib scikit-learn joblib dagshub
+          pip install mlflow seaborn pandas matplotlib scikit-learn joblib dagshub
 
       - name: Run MLflow Project
         run: |
@@ -38,15 +37,12 @@ jobs:
           echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
           echo "Latest run_id: $RUN_ID"
 
-      - name: Upload model artifact
+      - name: Upload model + artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: model-artifact
+          name: mlflow-artifacts
           path: |
-            mlruns/0/${{ env.RUN_ID }}/artifacts/rf_best_model/
-            MLProject/metric_info.json
-            MLProject/estimator.html
-            MLProject/training_confusion_matrix.png
+            mlruns/0/${{ env.RUN_ID }}/artifacts/
 
       - name: Build Docker Model
         run: |
